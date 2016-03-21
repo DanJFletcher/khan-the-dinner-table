@@ -43,15 +43,13 @@ staticTest($._("Add rows of meals"), function() {
     console.log($doc.context.body.innerHTML.replace( /\n/g, " " ).split( " ").join("").indexOf(theadP));
      
     if (fails(result)) {
-        if (htmlMatches(addedCellsNotInRowP) || htmlMatches(addedCellsNotInRow2P)) {
-            result = fail($._("Hm, it looks like you put your rows of data inside <thead>. That's not quite right..."));
+        if (changedthead) {
+            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, you can press the \"Start Over\" button if you have to."));
         } else if (htmlMatches(headerCellsInTBodyP)) {
             result = fail($._("You're using <th> cells inside your <tbody> rows, which isn't correct. Do you remember the other tag that you're meant to use for the cells inside the <tbody>? Hint: you're storing 'tabular data' in them."));
         } else if (htmlMatches(addedOneRowP)) {
             result = fail($._("Nice! Make sure you add at least three rows."));
-        } else if (changedthead) {
-            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, you can press the \"Start Over\" button if you have to."));
-        } 
+        }
     } 
     if (htmlMatches(multipleTBodysP)) {
         result = fail($._("You should only have one <tbody> tag inside a <table> tag, and all your <tr>s go inside that single <tbody>."));

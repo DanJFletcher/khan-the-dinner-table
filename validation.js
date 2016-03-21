@@ -7,6 +7,7 @@ var regex = [
             re: /(?=<td>).*(?=<td>).*(?=<td>)/
         }
     ];
+    
 
 staticTest($._("Add rows of meals"), function() {
     var result = null;
@@ -35,6 +36,10 @@ staticTest($._("Add rows of meals"), function() {
     var cellsNotInRowP     = 'table tbody > td';
     var cellsNotInRow2P    = 'table > td';
     var cellsNotInRow3P     = 'table thead > td';
+    
+    // detect changes to <thead>
+    var theadP = '<thead>\n<tr>\n<th>Meal</th>\n<th>Ingredients</th>\n<th>Price</th>\n</tr>\n</thead>';
+    var changedthead = $doc.context.body.innerHTML.split(" ").join("").indexOf(theadP) != -1;
      
     if (fails(result)) {
         if (htmlMatches(addedCellsNotInRowP) || htmlMatches(addedCellsNotInRow2P)) {
@@ -45,7 +50,10 @@ staticTest($._("Add rows of meals"), function() {
             result = fail($._("Nice! Make sure you add at least three rows."));
         }
     } else if (passes(result)) {
-        if (regex[0].re.test($doc.context.body.innerHTML) && htmlMatches({"tr td": 9})) {
+        if (changedthead) {
+            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remeber, you can press the \"Start Over\" button if you have to."));
+        } 
+        else if (regex[0].re.test($doc.context.body.innerHTML) && htmlMatches({"tr td": 9})) {
             result = pass(); 
         } else {
             result = fail();

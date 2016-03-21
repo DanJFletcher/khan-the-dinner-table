@@ -2,7 +2,7 @@ staticTest($._("Add rows of meals"), function() {
     var result = null;
     var descrip = $._("This is a webpage to show the dinner menu for a restaurant. We've created the initial table with three columns for the meal, ingredients, and price. Now, add three rows of data to the table, one row for each meal.");
     
-    var displayP = "<_>\n  <_>...</_>\n  <_>...</_>\n</_>\n";
+    var displayP = "<tbody>\n  <_>\n    <_>...</_>\n    <_>...</_>\n    <_>...</_>\n  </_>\n</tbody>";
     
     var addedRowsP = {'tbody tr:not(:empty)': 3};
     var addedCellsP = {'tbody tr td:not(:empty)': 9};

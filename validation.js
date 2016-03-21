@@ -38,8 +38,9 @@ staticTest($._("Add rows of meals"), function() {
     var cellsNotInRow3P     = 'table thead > td';
     
     // detect changes to <thead>
-    var theadP = '<thead>\n<tr>\n<th>Meal</th>\n<th>Ingredients</th>\n<th>Price</th>\n</tr>\n</thead>';
-    var changedthead = $doc.context.body.innerHTML.split(" ").join("").indexOf(theadP) != -1;
+    var theadP = '<thead><tr><th>Meal</th><th>Ingredients</th><th>Price</th></tr></thead>';
+    var changedthead = $doc.context.body.innerHTML.replace( /\n/g, " " ).split( " ").join("").indexOf(theadP) === -1;
+    console.log($doc.context.body.innerHTML.replace( /\n/g, " " ).split( " ").join("").indexOf(theadP));
      
     if (fails(result)) {
         if (htmlMatches(addedCellsNotInRowP) || htmlMatches(addedCellsNotInRow2P)) {
@@ -48,17 +49,10 @@ staticTest($._("Add rows of meals"), function() {
             result = fail($._("You're using <th> cells inside your <tbody> rows, which isn't correct. Do you remember the other tag that you're meant to use for the cells inside the <tbody>? Hint: you're storing 'tabular data' in them."));
         } else if (htmlMatches(addedOneRowP)) {
             result = fail($._("Nice! Make sure you add at least three rows."));
-        }
-    } else if (passes(result)) {
-        if (changedthead) {
+        } else if (changedthead) {
             result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, you can press the \"Start Over\" button if you have to."));
         } 
-        else if (regex[0].re.test($doc.context.body.innerHTML) && htmlMatches({"tr td": 9})) {
-            result = pass(); 
-        } else {
-            result = fail();
-        }
-    }
+    } 
     if (htmlMatches(multipleTBodysP)) {
         result = fail($._("You should only have one <tbody> tag inside a <table> tag, and all your <tr>s go inside that single <tbody>."));
     } else if (htmlMatches(multipleHeadsP)) {
@@ -67,6 +61,13 @@ staticTest($._("Add rows of meals"), function() {
         result = fail($._("It looks like you have <td> tags that aren't inside a <tr>?"));
     } else if (htmlMatches(rowsNotInP)) {
         result = fail($._("Each of your <tr> tags should be inside either a <thead> or a <tbody>, depending if they are header rows or body rows."));        
+    }
+    if (passes(result)) {
+        if (regex[0].re.test($doc.context.body.innerHTML) && htmlMatches({"tr td": 9})) {
+            result = pass(); 
+        } else {
+            result = fail();
+        }
     }
     
     assertMatch(result, descrip, displayP);

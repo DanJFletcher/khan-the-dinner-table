@@ -51,7 +51,7 @@ staticTest($._("Add rows of meals"), function() {
         }
     } else if (passes(result)) {
         if (changedthead) {
-            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remeber, you can press the \"Start Over\" button if you have to."));
+            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, you can press the \"Start Over\" button if you have to."));
         } 
         else if (regex[0].re.test($doc.context.body.innerHTML) && htmlMatches({"tr td": 9})) {
             result = pass(); 

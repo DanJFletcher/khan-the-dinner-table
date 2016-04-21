@@ -44,7 +44,7 @@ staticTest($._("Add rows of meals"), function() {
      
     if (fails(result)) {
         if (changedthead) {
-            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, you can press the \"Start Over\" button if you have to."));
+            result = fail($._("It looks like you changed the contents of the `<thead>`. You shouldn't have to change anything in there. Remember, when you add data for a table, it goes inside the `<tbody>`. You can also press the \"Start Over\" button if you have to."));
         } else if (htmlMatches(headerCellsInTBodyP)) {
             result = fail($._("You're using <th> cells inside your <tbody> rows, which isn't correct. Do you remember the other tag that you're meant to use for the cells inside the <tbody>? Hint: you're storing 'tabular data' in them."));
         } else if (htmlMatches(addedOneRowP)) {
